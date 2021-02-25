@@ -1,0 +1,7 @@
+.todo-page {
+  width: 100%;
+  display: flex;
+  padding-top: 160px;
+  flex-direction: column;
+  align-items: center;
+}
