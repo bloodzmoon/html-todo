@@ -12,7 +12,7 @@
   position: absolute;
   z-index: 1;
   opacity: 0.5;
-  /* background: url("../../img/react.svg") no-repeat center center; */
+  background: url("../img/html5.svg") no-repeat center center;
 }
 
 .content {
