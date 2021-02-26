@@ -1,0 +1,21 @@
+.button {
+  font-family: inherit;
+  letter-spacing: 0.6px;
+  width: 100px;
+  height: 40px;
+  color: white;
+  background: #333333;
+  border: none;
+  border-radius: 0;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.button:hover {
+  background: coral;
+}
+
+.button:focus {
+  outline: none;
+}

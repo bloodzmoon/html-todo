@@ -1,4 +1,7 @@
 import { Input } from '../components/Input.js'
+import { Button } from '../components/Button.js'
+import { TodoList } from '../components/TodoList.js'
+import { addTodo } from '../contexts/TodoContext.js'
 
 export function TodoPage() {
   return `
@@ -8,22 +11,55 @@ export function TodoPage() {
           placeholder: 'Type something to add..',
           autocomplete: 'nope',
         })}
-        <button >ADD</button>
+        ${Button({ type: 'button', label: 'ADD' })}
       </form>
+      ${TodoList()}
     </div>
   `
 }
 
-document.body.addEventListener('dom-changed', () => {
+document.body.addEventListener('dom-changed', (e) => {
+  if (location.hash.replace('#', '') !== '/todo') return
+
   const form = document.querySelector('#todo-form')
-  if (!form) return
+  const display = document.querySelector('#todo-display')
+  const input = Array.from(form.children).find(
+    (child) => child.tagName === 'INPUT'
+  )
+  const button = Array.from(form.children).find(
+    (child) => child.tagName === 'BUTTON'
+  )
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-    const input = Array.from(form.children).find(
-      (child) => child.tagName === 'INPUT'
-    )
-    console.log(input.value)
+    if (input.value === '') return
+    addTodo(input.value)
     input.value = ''
+    display.dispatchEvent(new Event('update-todo'))
   })
+
+  button.addEventListener('click', () => {
+    if (input.value === '') return
+    addTodo(input.value)
+    input.value = ''
+    display.dispatchEvent(new Event('update-todo'))
+  })
+})
+
+let firstLoaded = false
+window.addEventListener('popstate', () => {
+  if (location.hash.replace('#', '') === '/todo') {
+    if (firstLoaded) return
+
+    const tryToLoad = setInterval(() => {
+      const display = document.querySelector('#todo-display')
+      if (!display) return
+      display.dispatchEvent(new Event('update-todo'))
+      firstLoaded = true
+      console.log('a')
+      clearInterval(tryToLoad)
+    }, 10)
+  } else {
+    firstLoaded = false
+  }
 })
