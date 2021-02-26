@@ -5,8 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "parcel build public/index.html",
-    "deploy": "gh-pages -d dist",
+    "build": "parcel build public/index.html --public-url ./",
+    "deploy": "node deploy.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
